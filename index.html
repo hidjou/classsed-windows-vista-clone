@@ -1,0 +1,98 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css"
+        />
+        <link rel="stylesheet" href="./styles.css" />
+        <title>Windows Vista</title>
+    </head>
+    <body>
+        <div class="body-overlay"></div>
+        <div class="navbar">
+            <ul>
+                <li>Services</li>
+                <li>Blog</li>
+                <li>About</li>
+                <li>Contact</li>
+            </ul>
+        </div>
+        <div class="content">
+            <h1 class="page-title">Windows Vista</h1>
+            <div class="window strips draggable">
+                <div class="window-header">
+                    <p>This Computer</p>
+                    <div class="buttons">
+                        <div class="button minimize">
+                            <i class="fas fa-window-minimize"></i>
+                        </div>
+                        <div class="button maximize">
+                            <i class="far fa-square"></i>
+                        </div>
+                        <div class="button close">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="window-body-wrapper">
+                    <div class="window-body">
+                        <div style="padding: 2rem;">
+                            <img src="icons/icon_folder1.png" alt="" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <img src="icons/icon_folder_vista.png" alt="" />
+                        </div>
+                        <div style="padding: 2rem;">
+                            <img src="icons/icon_folder_desktop.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+        <script>
+            // target elements with the "draggable" class
+            interact('.draggable').draggable({
+                // enable inertial throwing
+                inertia: true,
+                // keep the element within the area of it's parent
+                modifiers: [
+                    interact.modifiers.restrictRect({
+                        restriction: 'parent',
+                        endOnly: true,
+                    }),
+                ],
+                // enable autoScroll
+                autoScroll: true,
+
+                listeners: {
+                    // call this function on every dragmove event
+                    move: dragMoveListener,
+                },
+            });
+
+            function dragMoveListener(event) {
+                var target = event.target;
+                // keep the dragged position in the data-x/data-y attributes
+                var x =
+                    (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+                var y =
+                    (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+                // translate the element
+                target.style.webkitTransform = target.style.transform =
+                    'translate(' + x + 'px, ' + y + 'px)';
+
+                // update the posiion attributes
+                target.setAttribute('data-x', x);
+                target.setAttribute('data-y', y);
+            }
+
+            // this function is used later in the resizing and gesture demos
+            window.dragMoveListener = dragMoveListener;
+        </script>
+    </body>
+</html>
